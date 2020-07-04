@@ -222,6 +222,18 @@ function check_prerequires() {
     return $ERR
 }
 
+function search_cards() {
+    typeset -i COUNT_CARDS
+    COUNT_CARDS=0
+    for card in $(find $HOME/tomtom_vfs -name "*.pna")
+    do
+        echo "Found $card card."
+        COUNT_CARDS+=1
+    done
+    echo "Found ${COUNT_CARDS} card(s)."
+    return 0
+}
+
 function main() {
     if [[ $# -ne 1 ]]
     then
@@ -251,6 +263,7 @@ EOT
     init_loopback_devs $1
     build_linear_raid
     mount_vfs
+    search_cards
     open_default_file_manager
     wait_for_return
     umount_vfs
